@@ -1,0 +1,13 @@
+<filters [filters]="filters"
+         [active]="activeFilter$ | async"
+         (changeFilter)="changeFilter($event)">
+</filters>
+
+<app-todos [todos]="todos$ | async"
+           (toggle)="toggle($event)"
+           [toggleTodo]="toggleTodoSuccess$ | async"
+           (remove)="remove($event)"></app-todos>
+
+<add-todo (add)="addTodo($event)"
+          [reset]="addTodoSuccess$ | async"
+          [titi]="'Isabelle'"></add-todo>

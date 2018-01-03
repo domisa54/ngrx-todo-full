@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Actions, Effect } from "@ngrx/effects";
 import { Observable } from "rxjs";
 import {
   GET_TODOS, GET_TODOS_SUCCESS, GET_TODOS_ERROR, ADD_TODO, ADD_TODO_SUCCESS,
@@ -16,15 +15,16 @@ import {
 } from "./app.module";
 import { TodosService } from "./todos.service";
 import { Store, Action } from "@ngrx/store";
+import { Actions, Effect } from "@ngrx/effects";
 
 
 @Injectable()
 export class TodosEffects {
   constructor( private actions$ : Actions, private todosService : TodosService, private store : Store<any> ) {
   }
-
+debugger
   @Effect() getTodos$ = this.actions$
-    .debug("Effects GetTodos$ > actions$")
+    //.debug("Effects GetTodos$ > actions$")
     .filter(({type}) => type === GET_TODOS)
     //.ofType(GET_TODOS)
     .debug("Effects GetTodos$ > ofType GET_TODOS")

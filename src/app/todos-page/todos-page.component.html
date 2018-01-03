@@ -4,6 +4,10 @@
 </filters>
 
 <app-todos [todos]="todos$ | async"
-           (toggle)="toggle($event)"></app-todos>
+           (toggle)="toggle($event)"
+           [toggleTodo]="toggleTodoSuccess$ | async"
+           (remove)="remove($event)"></app-todos>
 
-<add-todo (add)="addTodo($event)" [reset]="addTodoSuccess$ | async"></add-todo>
+<add-todo (add)="addTodo($event)"
+          [reset]="addTodoSuccess$ | async"
+          [titi]="'Isabelle'"></add-todo>

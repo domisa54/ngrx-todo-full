@@ -1,3 +1,10 @@
-<p (click)="toggle.next(todo)" [ngStyle]="{ textDecoration: todo.completed ? 'line-through' : 'none'}">
-  {{todo.title}}
+<p>
+    <span (click)="toggle.next(todo)"
+          [ngStyle]="{ textDecoration: completed ? 'line-through' : 'none'}">
+        {{todo.title}} from {{titi}}</span>
+    <span>
+        <button (click)="remove.next(todo)">
+            <strong>X</strong>
+        </button>
+    </span>
 </p>

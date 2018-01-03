@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
 
 @Component({
@@ -9,7 +9,7 @@ import { FormControl } from "@angular/forms";
     </select></div>
    `
 })
-export class FiltersComponent {
+export class FiltersComponent implements OnInit{
   @Input() filters;
   @Output() changeFilter = new EventEmitter<any>();
   filter : FormControl;
@@ -19,8 +19,12 @@ export class FiltersComponent {
   }
 
   @Input() set active( val ) {
-    console.log(val);
+    console.log("Filters Component > @input set active > activeFilter$ value", val);
     this.filter.setValue(val);
+  }
+
+  ngOnInit(){
+    console.log("Initialisation Filters  component");
   }
 
 }

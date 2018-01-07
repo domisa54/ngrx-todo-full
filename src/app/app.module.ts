@@ -21,9 +21,6 @@ import { debug } from 'util';
 import { create } from "rxjs-spy";
 import "rxjs-spy/add/operator/tag";
 
-const spy = create();
-spy.log();
-
 export const GET_TODOS = "GET_TODOS";
 export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
 export const GET_TODOS_ERROR = "GET_TODOS_ERROR";
@@ -40,6 +37,9 @@ export const TOGGLE_TODO_ERROR = "TOGGLE_TODO_ERROR";
 
 export const SET_VISIBILITY_FILTER = "SET_VISIBILITY_FILTER";
 export const GET_VISIBILITY_FILTER = "GET_VISIBILITY_FILTER";
+
+const spy = create();
+spy.log();
 
 /**
    * find the index of an item in the array
@@ -141,7 +141,7 @@ export function todos(state = initialState, { type, payload }) {
             //Créer une nouvelle copie de l'objet Todo si on veut forcer la desctruction et la recréation du composant <todo>
             //return Object.assign({},todo, {completed: !todo.completed})
 
-            //on prend soin de changer seulement la valeur du hash #completed mais attention de prendre soin qu'il n'y ait pas référence cachée
+            //on prend soin de changer seulement la valeur du hash #completed mais attention de prendre soin qu'il n'y ait pas de référence cachée
             return Object.assign(todo, { completed: !todo.completed })
           }
           return todo;
@@ -194,7 +194,7 @@ const routes = [
   { path: "todos", component: TodosPageComponent }
 ]
 
-let hasRouterError = false;
+/* let hasRouterError = false;
 
 @Injectable()
 export class MyErrorHandler implements ErrorHandler {
@@ -230,7 +230,7 @@ export class PreventErrorRouteReuseStrategy implements RouteReuseStrategy {
     }
     return future.routeConfig === curr.routeConfig;
   }
-}
+} */
 
 @NgModule({
   declarations: [
@@ -247,17 +247,21 @@ export class PreventErrorRouteReuseStrategy implements RouteReuseStrategy {
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes, {
+    RouterModule.forRoot(routes
+     /*  , {
       errorHandler: MyRouterErrorHandler,
       enableTracing: true
-    }),
+    } */
+  ),
     StoreModule.forRoot({ todos, visibilityFilter }),
     EffectsModule.forRoot([TodosEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     })
   ],
-  providers: [TodosService, TodoListStorageService, { provide: ErrorHandler, useClass: MyErrorHandler }, { provide: RouteReuseStrategy, useClass: PreventErrorRouteReuseStrategy }],
+  providers: [TodosService, TodoListStorageService
+    /* , { provide: ErrorHandler, useClass: MyErrorHandler }, { provide: RouteReuseStrategy, useClass: PreventErrorRouteReuseStrategy } */
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

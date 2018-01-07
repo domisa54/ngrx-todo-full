@@ -1,10 +1,12 @@
-<p *ngIf="todos.pending">Chargement en cours...</p>
+<p *ngIf="todos?.pending">Chargement en cours...</p>
 <app-todo [todo]="todo"
-          *ngFor="let todo of todos.data"
+          *ngFor="let todo of todos?.data"
           (toggle)="toggle.next($event)"
           [titi]="'Reyren'"
-          [completed]="todo?.completed"
+          [completed]="todo?.id === (toggleTodo$ | async)"
           (remove)="remove.next($event)">
+   ToggleTodo() : {{todo?.id === (toggleTodo$ | async)}}
 </app-todo>
-<p *ngIf="todos.error">{{todos.error}}</p>
-<!-- <p>{{(toggleCompleted$ |async) | json}}</p> -->
+
+<p *ngIf="todos?.error">{{todos.error}}</p>
+<p><span style ="font-size:15px">Id todo toggled is {{(toggleTodo$ | async)}} >> toggle is {{todos?.data[2]?.id === (toggleTodo$ | async) }}</span></p>

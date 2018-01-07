@@ -43,7 +43,6 @@ export class TodosPageComponent implements OnInit, OnDestroy {
   addTodoSuccess$: Observable < any > ;
   toggleTodoSuccess$: Observable < any > ;
   private _subscriptionToAddToSucess: ISubscription;
-  private _subscriptionToRemoveToSucess: ISubscription;
   private _subscriptionToToggleToSucess: ISubscription;
   count: number = 0;
 
@@ -58,20 +57,21 @@ export class TodosPageComponent implements OnInit, OnDestroy {
     title: "Active"
   }];
 
-  constructor(private store: Store < any > , private todosEffects: TodosEffects, private actions$: Actions) {
+  constructor(
+    private store: Store < any > , 
+    private todosEffects: TodosEffects, 
+    private actions$: Actions
+  ) {
 
     this.store.dispatch(getTodos());
 
     this.activeFilter$ = store.select("visibilityFilter").take(1);
 
-    // We get a reference on a Observable for reducer todos which return a new or current state
-    //store.select() internally uses distinctUntilChanged(), meaning it will only fire when the state actually changes. 
-    // the todos[] payload are stored in the hash data: of the state
+  
     this.todos$ = store.select("todos");
 
-    // todoEffects.addTodos completes by emiiting TOGGLE_TODO_SUCCESS Action
+    
     this.addTodoSuccess$ = this.todosEffects.addTodo$
-      //this.addTodoSuccess$ = this.actions$
       .filter(({
         type
       }) => type === ADD_TODO_SUCCESS).tag('addTodoSuccess$');
@@ -81,7 +81,7 @@ export class TodosPageComponent implements OnInit, OnDestroy {
     )
 
 
-    //this.toggleTodoSuccess$ = this.todosEffects.toggleTodo$
+   
     this.toggleTodoSuccess$ = this.actions$
       .filter(({
         type
@@ -145,40 +145,8 @@ export class TodosPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._subscriptionToAddToSucess.unsubscribe();
-    this._subscriptionToToggleToSucess.unsubscribe();
-
+    if (this._subscriptionToAddToSucess)this._subscriptionToAddToSucess.unsubscribe();
+    if (this._subscriptionToToggleToSucess)this._subscriptionToToggleToSucess.unsubscribe();
   }
-
-  /* ngOnChanges() {
-      let subscription = this.todos$.subscribe( state => 
-      console.log("ngOnChanges - data are : ",state));
-      subscription.unsubscribe();
-    }
-  
-    ngAfterContentInit() {
-      let subscription = this.todos$.subscribe( state => 
-        console.log("ngAfterContentInit",state));
-        subscription.unsubscribe();
-    }
-  
-    ngAfterContentChecked() {
-      let subscription = this.todos$.subscribe( state => 
-        console.log("ngAfterContentChecked",state));
-        subscription.unsubscribe();
-    }
-  
-    ngAfterViewInit() {
-      let subscription = this.todos$.subscribe( state => 
-        console.log("ngAfterViewInit",state));
-        subscription.unsubscribe();
-    }
-  
-    ngAfterViewChecked() {
-      let subscription = this.todos$.subscribe( state => 
-        console.log("ngAfterViewChecked",state));
-        subscription.unsubscribe();
-    } */
-
 
 }

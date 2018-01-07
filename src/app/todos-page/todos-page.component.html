@@ -5,7 +5,7 @@
 
 <app-todos [todos]="todos$ | async"
            (toggle)="toggle($event)"
-           [toggleTodo]="toggleTodoSuccess$ | async"
+           [toggleTodo$]="toggleTodoSuccess$ | async"
            (remove)="remove($event)"></app-todos>
 
 <add-todo (add)="addTodo($event)"
